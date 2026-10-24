@@ -83,9 +83,7 @@ Fill in `.env.local`:
 
 | Setting | What to put |
 | --- | --- |
-| `OWNER_PASSWORD` | The password the owner logs in with. Use something long. |
-| `SESSION_SECRET` | A random string. Make one with `openssl rand -hex 32`. |
-| `SALES_API_SECRET` | Another random string, made the same way. The website sends it with every sale. |
+| `SALES_API_SECRET` | A random string. Make one with `openssl rand -hex 32`. The website sends it with every sale. |
 | `ANTHROPIC_API_KEY` | Only for **Import with AI**. Create one at https://platform.claude.com. |
 | `DATABASE_URL` | Leave empty on your computer. |
 
@@ -95,7 +93,7 @@ Then start the app:
 npm run dev
 ```
 
-Open **http://localhost:3000** and log in with `OWNER_PASSWORD`.
+Open **http://localhost:3000**. There's no login: the dashboard opens straight away.
 
 On your computer, sales are stored in a built-in database in the `.data/` folder, so there's nothing else to install. To fill it with 80 sample sales to try things out, run the command below. It only works on this local database, never a real one.
 
@@ -171,27 +169,24 @@ Content-Type: application/json
 The website has to be able to reach the app, so it needs to be hosted, for example on Vercel. Hosted apps can't use the built-in database, so you need a hosted Postgres database:
 
 1. Create the project on Vercel and add a Postgres database to it (**Storage → Neon**). This sets `DATABASE_URL` for you.
-2. In the project's **Settings → Environment Variables**, add `OWNER_PASSWORD`, `SESSION_SECRET` and `SALES_API_SECRET`. Use different values from your local ones.
+2. In the project's **Settings → Environment Variables**, add `SALES_API_SECRET`. Use a different value from your local one.
 3. Deploy. The sales table is created automatically the first time the app runs.
 4. Give the website developer the app's address and the `SALES_API_SECRET`.
 
-Login cookies only work over HTTPS when hosted, which Vercel provides automatically.
-
 ## Security notes
 
-- The dashboard and its API need the owner's login. Logged-out visitors are sent to the login page.
-- After 5 wrong passwords, that address is locked out for 15 minutes.
-- Logins last 30 days. To log everyone out (for example after changing the password), change `SESSION_SECRET`.
+- **The dashboard has no login for now.** Anyone who can reach the app can see, change and delete sales and download the Excel files. That's fine on your own computer, but don't host it on the internet until a login is added back (or the hosted app is protected another way, such as Vercel's Deployment Protection).
+- The website endpoint (`/api/sales`) still needs `SALES_API_SECRET`, so strangers can't add fake sales.
 - Duplicate invoice numbers are blocked by the database itself, so two identical sales arriving at the same moment can't both be saved.
 
 ## Adding more businesses later
 
-The app currently serves one business. To serve several, each sale needs to record which business it belongs to, and each business needs its own login and website secret. The database, queries and dashboard are all in one place (`lib/db.ts`, `lib/sales-repo.ts`, `app/dashboard/`), so this can be added without starting over.
+The app currently serves one business. To serve several, each sale needs to record which business it belongs to, and each business needs its own website secret (and a login). The database, queries and dashboard are all in one place (`lib/db.ts`, `lib/sales-repo.ts`, `app/dashboard/`), so this can be added without starting over.
 
 ## Development
 
 ```bash
-npm test        # validation, totals, lists, database queries, duplicates, login
+npm test        # validation, totals, lists, database queries, duplicates
 npm run build   # production build
 ```
 

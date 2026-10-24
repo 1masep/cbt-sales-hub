@@ -2,7 +2,6 @@ import { DuplicateInvoiceError } from "../../../../../lib/process-sale";
 import { readJson } from "../../../../../lib/read-json";
 import { getRepo } from "../../../../../lib/repo";
 import { MAX_ID } from "../../../../../lib/sales-repo";
-import { isOwner } from "../../../../../lib/session";
 import { validateSale } from "../../../../../lib/validate";
 
 type Context = { params: Promise<{ id: string }> };
@@ -13,7 +12,6 @@ async function saleId(context: Context): Promise<number | null> {
 }
 
 export async function PATCH(request: Request, context: Context) {
-  if (!(await isOwner())) return Response.json({ error: "Not logged in" }, { status: 401 });
   const id = await saleId(context);
   if (!id) return Response.json({ error: "Sale not found" }, { status: 404 });
 
@@ -39,7 +37,6 @@ export async function PATCH(request: Request, context: Context) {
 }
 
 export async function DELETE(_request: Request, context: Context) {
-  if (!(await isOwner())) return Response.json({ error: "Not logged in" }, { status: 401 });
   const id = await saleId(context);
   if (!id || !(await (await getRepo()).remove(id))) {
     return Response.json({ error: "Sale not found" }, { status: 404 });

@@ -1,10 +1,8 @@
 import { cleanCode, cleanProductFields } from "../../../../../lib/hub/fields";
 import { hubStore } from "../../../../../lib/hub/load";
 import { readJson } from "../../../../../lib/read-json";
-import { isOwner } from "../../../../../lib/session";
 
 export async function POST(request: Request) {
-  if (!(await isOwner())) return Response.json({ error: "Not logged in" }, { status: 401 });
   const body = await readJson(request);
   if (!body.ok) return Response.json({ error: body.error }, { status: body.status });
   const { code, newCode, fields } = body.value as { code?: unknown; newCode?: unknown; fields?: Record<string, unknown> };
@@ -23,7 +21,6 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-  if (!(await isOwner())) return Response.json({ error: "Not logged in" }, { status: 401 });
   const code = cleanCode(new URL(request.url).searchParams.get("code"));
   if (!code) return Response.json({ error: "Missing code" }, { status: 400 });
   await (await hubStore()).deleteProduct(code);

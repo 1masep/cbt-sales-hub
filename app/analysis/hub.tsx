@@ -37,7 +37,6 @@ export function AnalysisHub({ categories, reps }: { categories: string[]; reps: 
     if (TABS.some((t) => t.id === fromHash)) setTab(fromHash);
     fetch("/api/admin/hub")
       .then(async (r) => {
-        if (r.status === 401) return void (window.location.href = "/login?next=/analysis");
         if (!r.ok) throw new Error();
         setData(await r.json());
       })

@@ -172,7 +172,7 @@ Layout follows one predictable column on a 1680px maximum: header, title line, f
 A ledger palette: blue-tinted paper and ink, one company blue for action, and three state colors borrowed from the CBT logo and website.
 
 ### Primary
-- **CBT Blue** (oklch(0.45 0.17 263), matched to the website's #1346AF): primary buttons (Download Excel, Save, Sign in, Read and fill in), keyboard focus outlines, selected rows, breakdown bars, Magic UI highlight color. Nothing else.
+- **CBT Blue** (oklch(0.45 0.17 263), matched to the website's #1346AF): primary buttons (Download Excel, Save, Read and fill in), keyboard focus outlines, selected rows, breakdown bars, Magic UI highlight color. Nothing else.
 - **CBT Blue Deep** (oklch(0.39 0.16 263)): hover and pressed state of CBT Blue only.
 - **CBT Blue Wash** (oklch(0.95 0.025 263)): row hover, AI badge background, focused dropzone. A tint, never a fill for text-heavy areas.
 - **Harbor Navy** (oklch(0.32 0.075 248), from the website's #0D3B66): the company name, the lead "Total sales" figure, a panel's total line. The "this is ours" color.
@@ -226,7 +226,7 @@ A ledger palette: blue-tinted paper and ink, one company blue for action, and th
 Flat by default. Depth comes from paper tones and hairline rules, not shadows: the header is separated by a 1px rule, the figures row by rules above and below, the sheet by a 1px edge. Shadows exist in only two places, both functional.
 
 ### Shadow Vocabulary
-- **Lift** (`box-shadow: 0 1px 2px oklch(0.25 0.03 264 / 0.05), 0 2px 8px oklch(0.25 0.03 264 / 0.04)`): the active tab in a segmented control and the login card. Says "this is the selected or standalone thing".
+- **Lift** (`box-shadow: 0 1px 2px oklch(0.25 0.03 264 / 0.05), 0 2px 8px oklch(0.25 0.03 264 / 0.04)`): the active tab in a segmented control. Says "this is the selected or standalone thing".
 - **Panel** (`box-shadow: 0 2px 6px oklch(0.25 0.03 264 / 0.08), 0 18px 48px oklch(0.25 0.03 264 / 0.16)`): side panels sliding over the sheet, with a 32% ink scrim behind.
 
 ### Named Rules
@@ -242,7 +242,7 @@ Familiar, sturdy, and the same everywhere: the owner should never wonder whether
 - **Secondary:** paper fill, 1px ink-18% inset edge. Supporting actions: Import with AI (`sales-dashboard.tsx:135`), Check drafts (`:185`), Review them / Show all sales (`:200`), Clear filters in empty state (`:333`), Mark as reviewed (`app/dashboard/edit-drawer.tsx:77`), Check the drafts (`ai-import.tsx:157`), Try again (`app/dashboard/woo-status.tsx:89`).
 - **Ghost:** no fill, soft ink; paper-shade on hover. Quiet exits: Cancel and Keep (`sale-form-drawer.tsx:238`, `:226`), Clear filters (`sales-dashboard.tsx:244`), Retry (`:254`).
 - **Danger:** a two-step pattern. The quiet coral trigger (`sale-form-drawer.tsx:233`) reveals an inline confirm row with the solid coral button (`:223`). Never a single-click delete.
-- **Icon button:** 40px square, soft ink, paper-shade hover; always has `aria-label` and `title`. Close (`ai-import.tsx:27`, `sale-form-drawer.tsx:161`), Log out (`sales-dashboard.tsx:144`), Previous/Next page (`:350`, `:353`), Check website orders now (`woo-status.tsx:62`).
+- **Icon button:** 40px square, soft ink, paper-shade hover; always has `aria-label` and `title`. Close (`ai-import.tsx:27`, `sale-form-drawer.tsx:161`), Previous/Next page (`sales-dashboard.tsx:350`, `:353`), Check website orders now (`woo-status.tsx:62`).
 - **Hover / Focus / Pressed:** 150ms color change on ease-out-quart; a 2px CBT Blue focus outline offset 2px; pressed nudges down 1px. Disabled is 55% opacity, no pointer.
 - **Built from:** shadcn/ui `Button` (variants `default`, `outline`, `ghost`, `destructive`, size `icon`).
 - **Magic UI:** none. Shimmer, Rainbow, Pulsating, Ripple, Shiny and Interactive Hover buttons are prohibited here.
@@ -252,7 +252,7 @@ Familiar, sturdy, and the same everywhere: the owner should never wonder whether
 - **Style:** paper fill, 1px ink-18% border, 8px radius, 40px tall, 15px text, label above at Label weight.
 - **Focus:** border turns CBT Blue plus a 3px CBT Blue 35% ring. Never removed.
 - **Error / Disabled:** coral border and a coral message under the field (`field-error`), written as what to do ("Must be a US zip code (12345 or 12345-6789)").
-- **Used in:** login password (`app/login/login-form.tsx:12`), every sale field via the `input()` and `select()` helpers (`sale-form-drawer.tsx:119`, `:133`), import text and link (`ai-import.tsx:101`, `:114`), the filters bar (below).
+- **Used in:** every sale field via the `input()` and `select()` helpers (`sale-form-drawer.tsx:119`, `:133`), import text and link (`ai-import.tsx:101`, `:114`), the filters bar (below).
 - **Built from:** shadcn/ui `Input`, `Label`, `Select`, `Textarea`, `Form` message pattern.
 - **Magic UI:** none.
 - **React pattern:** controlled fields per [`<input>`](https://react.dev/reference/react-dom/components/input), [`<select>`](https://react.dev/reference/react-dom/components/select) and [`<textarea>`](https://react.dev/reference/react-dom/components/textarea); the login form uses [`useActionState`](https://react.dev/reference/react/useActionState) with a [`<form action>`](https://react.dev/reference/react-dom/components/form) server function; the first field is focused through a ref ([Manipulating the DOM with Refs](https://react.dev/learn/manipulating-the-dom-with-refs), `sale-form-drawer.tsx:77`).
@@ -316,9 +316,6 @@ Familiar, sturdy, and the same everywhere: the owner should never wonder whether
 - **Results** (`:133`): one row per sale found, Canopy Wash for "Saved to the sheet" or "Already in the sheet", Amber Wash for "Held as a draft" with its reasons, then one secondary button to check the drafts. Blur Fade is approved here (see Side Panels).
 - **Draft cards** (`:272`): the one place cards are used, because each draft is a separate decision: invoice and total on top, customer and SKU, the first reason in amber, the source in faint ink; CBT Blue edge and wash on hover.
 
-### Login
-- **Style:** a centered 380px paper card with the Lift shadow: the 72px round logo, the company name as a Title in Harbor Navy, "Sign in to see your sales.", the password field, and a full-width primary button (`app/login/page.tsx:9`).
-- **React pattern:** [`useActionState`](https://react.dev/reference/react/useActionState) returns the error message and pending state from the server function.
 
 ## 6. Do's and Don'ts
 

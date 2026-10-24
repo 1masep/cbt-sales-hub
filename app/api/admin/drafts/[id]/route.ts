@@ -2,7 +2,6 @@ import { processSale } from "../../../../../lib/process-sale";
 import { readJson } from "../../../../../lib/read-json";
 import { getDraftsRepo, getRepo } from "../../../../../lib/repo";
 import { MAX_ID, salesStore } from "../../../../../lib/sales-repo";
-import { isOwner } from "../../../../../lib/session";
 
 type Context = { params: Promise<{ id: string }> };
 
@@ -13,7 +12,6 @@ async function draftId(context: Context): Promise<number | null> {
 
 // Save a draft into the sheet, with whatever corrections the owner made.
 export async function POST(request: Request, context: Context) {
-  if (!(await isOwner())) return Response.json({ error: "Not logged in" }, { status: 401 });
   const id = await draftId(context);
   const drafts = await getDraftsRepo();
   if (!id || !(await drafts.get(id))) return Response.json({ error: "Draft not found" }, { status: 404 });
@@ -36,7 +34,6 @@ export async function POST(request: Request, context: Context) {
 }
 
 export async function DELETE(_request: Request, context: Context) {
-  if (!(await isOwner())) return Response.json({ error: "Not logged in" }, { status: 401 });
   const id = await draftId(context);
   if (!id || !(await (await getDraftsRepo()).resolve(id, "discarded"))) {
     return Response.json({ error: "Draft not found" }, { status: 404 });

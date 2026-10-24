@@ -1,11 +1,9 @@
 import { readWorkbook } from "../../../../../lib/hub/excel";
 import { hubStore, loadHub } from "../../../../../lib/hub/load";
-import { isOwner } from "../../../../../lib/session";
 
 const MAX_BYTES = 10 * 1024 * 1024;
 
 export async function POST(request: Request) {
-  if (!(await isOwner())) return Response.json({ error: "Not logged in" }, { status: 401 });
   if (Number(request.headers.get("content-length")) > MAX_BYTES + 1024 * 1024) return Response.json({ error: "Workbooks must be 10 MB or smaller." }, { status: 413 });
   let file: FormDataEntryValue | null;
   try {

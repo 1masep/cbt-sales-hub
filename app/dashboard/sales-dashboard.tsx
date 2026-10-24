@@ -87,10 +87,6 @@ export function SalesDashboard({ categories, reps }: { categories: string[]; rep
     params.set("pageSize", String(PAGE_SIZE));
     fetch(`/api/admin/sales?${params}`, { signal: controller.signal })
       .then(async (res) => {
-        if (res.status === 401) {
-          window.location.href = "/login";
-          return;
-        }
         if (!res.ok) throw new Error();
         setData((await res.json()) as Data);
         setError(null);

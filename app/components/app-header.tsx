@@ -1,9 +1,7 @@
 "use client";
 
-import { LogOut } from "lucide-react";
 import Link from "next/link";
 import { BRAND } from "../../lib/brand";
-import { logout } from "../login/actions";
 import styles from "./app-header.module.css";
 
 const PAGES = [
@@ -11,8 +9,8 @@ const PAGES = [
   { href: "/analysis", label: "Analysis Hub", id: "analysis" },
 ] as const;
 
-// The header shared by every signed-in page: the company, the page links,
-// page-specific status and actions, and Log out.
+// The header shared by every page: the company, the page links, and
+// page-specific status and actions.
 export function AppHeader({ current, children }: { current: (typeof PAGES)[number]["id"]; children?: React.ReactNode }) {
   return (
     <header className={styles.header}>
@@ -30,11 +28,6 @@ export function AppHeader({ current, children }: { current: (typeof PAGES)[numbe
       </nav>
       <div className={styles.actions}>
         {children}
-        <form action={logout}>
-          <button className="icon-btn" type="submit" aria-label="Log out" title="Log out">
-            <LogOut size={18} strokeWidth={1.75} />
-          </button>
-        </form>
       </div>
     </header>
   );

@@ -1,7 +1,6 @@
 import { extractSales, FILE_TYPES, ImportError, importSource, type ImportSource } from "../../../../lib/ai-import";
 import { getDraftsRepo, getRepo } from "../../../../lib/repo";
 import { salesStore } from "../../../../lib/sales-repo";
-import { isOwner } from "../../../../lib/session";
 
 // Reading a long PDF or a web page can take a minute or two.
 export const maxDuration = 300;
@@ -39,7 +38,6 @@ async function readSource(form: FormData): Promise<ImportSource | string> {
 }
 
 export async function POST(request: Request) {
-  if (!(await isOwner())) return fail(401, "Not logged in");
   if (!process.env.ANTHROPIC_API_KEY && !process.env.ANTHROPIC_AUTH_TOKEN) {
     return fail(503, "AI import isn't set up yet: add ANTHROPIC_API_KEY to the app's settings.");
   }

@@ -2,7 +2,6 @@ import type { NextRequest } from "next/server";
 import { buildSalesWorkbook } from "../../../../lib/export";
 import { getRepo } from "../../../../lib/repo";
 import { parseFilters, type Filters } from "../../../../lib/sales-repo";
-import { isOwner } from "../../../../lib/session";
 
 function describe(filters: Filters): string {
   const parts = [
@@ -15,7 +14,6 @@ function describe(filters: Filters): string {
 }
 
 export async function GET(request: NextRequest) {
-  if (!(await isOwner())) return Response.json({ error: "Not logged in" }, { status: 401 });
   const filters = parseFilters(request.nextUrl.searchParams);
   const repo = await getRepo();
   const [rows, summary] = await Promise.all([repo.all(filters), repo.summary(filters)]);

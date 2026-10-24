@@ -1,10 +1,8 @@
 import { cleanCustomerFields } from "../../../../../lib/hub/fields";
 import { hubStore } from "../../../../../lib/hub/load";
 import { readJson } from "../../../../../lib/read-json";
-import { isOwner } from "../../../../../lib/session";
 
 export async function POST(request: Request) {
-  if (!(await isOwner())) return Response.json({ error: "Not logged in" }, { status: 401 });
   const body = await readJson(request);
   if (!body.ok) return Response.json({ error: body.error }, { status: body.status });
   const { key, fields } = body.value as { key?: unknown; fields?: Record<string, unknown> };
@@ -14,7 +12,6 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-  if (!(await isOwner())) return Response.json({ error: "Not logged in" }, { status: 401 });
   const key = new URL(request.url).searchParams.get("key");
   if (!key) return Response.json({ error: "Missing key" }, { status: 400 });
   await (await hubStore()).deleteCustomer(key.slice(0, 300));

@@ -3,11 +3,9 @@
 // and in the Excel download. Needs the sales app (3456) and demo shop (3457)
 // running. Run with: npm run check-promise
 import ExcelJS from "exceljs";
-import { createSessionToken } from "../lib/auth";
 
 const SHOP = process.env.SHOP_URL || "http://localhost:3457";
 const APP = process.env.SALES_APP_URL || "http://localhost:3456";
-const cookie = `owner_session=${createSessionToken()}`;
 
 type Line = Record<string, string | number> & { invoiceNumber: string; expectedTotal: number; result?: { status: string; note?: string } };
 type Order = { orderNumber: string; total: number; lines: Line[] };
@@ -40,9 +38,7 @@ async function placeOrder(items: { sku: string; qty: number }[], customer = base
 }
 
 async function sheetRows(orderNumber: string): Promise<Row[]> {
-  const res = await fetch(`${APP}/api/admin/sales?q=${encodeURIComponent(`WEB-${orderNumber}-`)}&pageSize=500&sort=invoiceNumber&dir=asc`, {
-    headers: { cookie },
-  });
+  const res = await fetch(`${APP}/api/admin/sales?q=${encodeURIComponent(`WEB-${orderNumber}-`)}&pageSize=500&sort=invoiceNumber&dir=asc`);
   return (await res.json()).rows;
 }
 
@@ -160,7 +156,7 @@ async function main() {
   }
 
   // 6. The Excel download matches the sheet for these orders.
-  const res = await fetch(`${APP}/api/admin/export?q=${encodeURIComponent(`WEB-${multi.orderNumber}-`)}&sort=invoiceNumber&dir=asc`, { headers: { cookie } });
+  const res = await fetch(`${APP}/api/admin/export?q=${encodeURIComponent(`WEB-${multi.orderNumber}-`)}&sort=invoiceNumber&dir=asc`);
   const wb = new ExcelJS.Workbook();
   await wb.xlsx.load(Buffer.from(await res.arrayBuffer()) as never);
   const ws = wb.getWorksheet("Sales")!;
