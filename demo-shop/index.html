@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo Shop</title>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=DM+Sans:wght@400;500;600&display=swap");
+  :root {
+    --bg: #faf7f2; --card: #fffdf9; --ink: #2a2522; --muted: #7b726b; --line: rgba(42,37,34,.1);
+    --accent: #b5562f; --accent-dark: #93421f; --ok: #2f7a4f; --ok-bg: #e4f2e9; --bad: #b3372b; --bad-bg: #f8e4e1; --warn-bg: #fbefd9; --warn: #8a5a0b;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 "DM Sans", sans-serif; }
+  .banner { background: var(--ink); color: #f3ede6; text-align: center; font-size: 13px; padding: 6px 16px; }
+  header { max-width: 1180px; margin: 0 auto; padding: 28px 24px 8px; display: flex; align-items: baseline; justify-content: space-between; }
+  h1 { font-family: Fraunces, serif; font-size: 30px; margin: 0; letter-spacing: -.02em; }
+  h2 { font-family: Fraunces, serif; font-size: 20px; margin: 0 0 14px; }
+  main { max-width: 1180px; margin: 0 auto; padding: 16px 24px 64px; display: grid; grid-template-columns: 1fr 380px; gap: 32px; align-items: start; }
+  .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+  .product { background: var(--card); border-radius: 12px; padding: 16px; box-shadow: 0 0 0 1px var(--line); display: grid; gap: 6px; }
+  .product .cat { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+  .product .name { font-weight: 600; }
+  .product .sku { font: 12px ui-monospace, monospace; color: var(--muted); }
+  .product .row { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; }
+  .price { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .stepper { display: flex; align-items: center; gap: 4px; }
+  .stepper button { width: 28px; height: 28px; border-radius: 7px; border: 0; background: #efe8df; cursor: pointer; font-size: 16px; }
+  .stepper button:hover { background: #e4dbcf; }
+  .stepper span { min-width: 22px; text-align: center; font-variant-numeric: tabular-nums; }
+  aside { position: sticky; top: 16px; background: var(--card); border-radius: 14px; padding: 20px; box-shadow: 0 0 0 1px var(--line), 0 8px 24px rgba(42,37,34,.06); }
+  .cart-line { display: flex; justify-content: space-between; font-size: 14px; padding: 4px 0; }
+  .totals { border-top: 1px solid var(--line); margin-top: 10px; padding-top: 10px; font-variant-numeric: tabular-nums; }
+  .totals div { display: flex; justify-content: space-between; font-size: 14px; color: var(--muted); }
+  .totals .grand { color: var(--ink); font-weight: 600; font-size: 17px; margin-top: 4px; }
+  form { display: grid; gap: 10px; margin-top: 16px; }
+  label { display: grid; gap: 3px; font-size: 12px; font-weight: 600; color: var(--muted); }
+  input { font: inherit; color: var(--ink); background: #fff; border: 1px solid rgba(42,37,34,.18); border-radius: 8px; padding: 8px 10px; }
+  input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(181,86,47,.15); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .btn { font: inherit; font-weight: 600; border: 0; border-radius: 9px; padding: 11px 16px; background: var(--accent); color: #fff; cursor: pointer; }
+  .btn:hover { background: var(--accent-dark); }
+  .btn:disabled { opacity: .5; cursor: default; }
+  .btn-small { font: inherit; font-size: 13px; border: 0; border-radius: 7px; padding: 5px 10px; background: #efe8df; cursor: pointer; }
+  .empty { color: var(--muted); font-size: 14px; }
+  .orders { grid-column: 1; }
+  .order { background: var(--card); border-radius: 12px; box-shadow: 0 0 0 1px var(--line); padding: 14px 16px; margin-bottom: 10px; }
+  .order-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; }
+  .order-head > span { min-width: 0; overflow-wrap: anywhere; }
+  .order-head strong { font: 600 14px ui-monospace, monospace; }
+  .order table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+  .order td { padding: 5px 6px; border-top: 1px solid var(--line); vertical-align: top; }
+  .order td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .pill { display: inline-block; font-size: 12px; font-weight: 600; border-radius: 99px; padding: 2px 9px; }
+  .recorded { background: var(--ok-bg); color: var(--ok); }
+  .rejected { background: var(--warn-bg); color: var(--warn); }
+  .failed { background: var(--bad-bg); color: var(--bad); }
+  .note { color: var(--muted); font-size: 12px; }
+  @media (max-width: 860px) { main { grid-template-columns: 1fr; } aside { position: static; } }
+</style>
+</head>
+<body>
+<div class="banner">Demo shop for testing — orders here are sent to the sales app like a real store would.</div>
+<header><h1>Harbor &amp; Pine Supply</h1><span class="note" id="target"></span></header>
+<main>
+  <section>
+    <h2>Products</h2>
+    <div class="products" id="products"></div>
+  </section>
+
+  <aside>
+    <h2>Your order</h2>
+    <div id="cart"><p class="empty">Add something to get started.</p></div>
+    <form id="checkout">
+      <div class="two">
+        <label>Name<input name="name" value="Jamie Rivera" required></label>
+        <label>Company (optional)<input name="company" value="Rivera Landscaping"></label>
+      </div>
+      <label>Address<input name="address" value="22 Orchard St, Burlington, VT" required></label>
+      <div class="two">
+        <label>Zip code<input name="zip" value="05401" required></label>
+        <label>Phone<input name="phone" value="(802) 555-0147" required></label>
+      </div>
+      <label>Email<input name="email" type="email" value="jamie@riveralandscaping.com" required></label>
+      <label>Discount code<input name="code" placeholder="SAVE10"></label>
+      <button class="btn" id="place" type="submit" disabled>Place order</button>
+    </form>
+  </aside>
+
+  <section class="orders">
+    <h2>Orders placed</h2>
+    <div id="orders"><p class="empty">No orders yet.</p></div>
+  </section>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+const money = (n) => n.toLocaleString("en-US", { style: "currency", currency: "USD" });
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+let products = [];
+const cart = new Map();
+
+function renderProducts() {
+  $("products").innerHTML = products.map((p) => `
+    <div class="product">
+      <span class="cat">${esc(p.category)}</span>
+      <span class="name">${esc(p.name)}</span>
+      <span class="sku">${esc(p.sku)}</span>
+      <div class="row">
+        <span class="price">${money(p.price / 100)}</span>
+        <div class="stepper">
+          <button type="button" data-sku="${p.sku}" data-d="-1" aria-label="Remove one ${esc(p.name)}">−</button>
+          <span data-qty="${p.sku}">${cart.get(p.sku) ?? 0}</span>
+          <button type="button" data-sku="${p.sku}" data-d="1" aria-label="Add one ${esc(p.name)}">+</button>
+        </div>
+      </div>
+    </div>`).join("");
+}
+
+function renderCart() {
+  const lines = [...cart].filter(([, q]) => q > 0).map(([sku, qty]) => ({ p: products.find((x) => x.sku === sku), qty }));
+  $("place").disabled = lines.length === 0;
+  if (!lines.length) return ($("cart").innerHTML = '<p class="empty">Add something to get started.</p>');
+  const sub = lines.reduce((s, l) => s + l.p.price * l.qty, 0) / 100;
+  $("cart").innerHTML = lines.map((l) => `<div class="cart-line"><span>${l.qty} × ${esc(l.p.name)}</span><span>${money((l.p.price * l.qty) / 100)}</span></div>`).join("")
+    + `<div class="totals"><div><span>Subtotal</span><span>${money(sub)}</span></div><div><span>Tax and discounts</span><span>at checkout</span></div></div>`;
+}
+
+function renderOrders(orders) {
+  if (!orders.length) return ($("orders").innerHTML = '<p class="empty">No orders yet.</p>');
+  $("orders").innerHTML = orders.map((o) => {
+    const states = o.lines.map((l) => l.result?.status);
+    const all = states.every((s) => s === "recorded") ? "recorded" : states.some((s) => s === "failed") ? "failed" : "rejected";
+    const label = { recorded: "In sales sheet", failed: "Not sent — sales app unreachable", rejected: "Refused by sales app" }[all];
+    return `<div class="order" data-order="${o.orderNumber}">
+      <div class="order-head">
+        <span><strong>#${esc(o.orderNumber)}</strong> · ${new Date(o.placedAt).toLocaleString()} · ${esc(o.customer.company || o.customer.name)} · <b>${money(o.total)}</b></span>
+        <span><span class="pill ${all}">${label}</span> <button class="btn-small" data-resend="${o.orderNumber}">${all === "recorded" ? "Send again" : "Retry"}</button></span>
+      </div>
+      <table>${o.lines.map((l) => `<tr>
+        <td class="sku">${esc(l.invoiceNumber)}</td><td>${esc(l.sku)}</td><td class="num">${l.quantity} × ${money(l.price)}</td>
+        <td class="num">−${money(l.discount)}</td><td class="num">+${money(l.salesTax)} tax</td><td class="num"><b>${money(l.expectedTotal)}</b></td>
+        <td><span class="pill ${l.result?.status}">${l.result?.status ?? "pending"}</span> <span class="note">${esc(l.result?.note ?? "")}</span></td></tr>`).join("")}</table>
+    </div>`;
+  }).join("");
+}
+
+async function loadOrders() { renderOrders(await (await fetch("/api/orders")).json()); }
+
+document.addEventListener("click", async (e) => {
+  const step = e.target.closest("[data-sku]");
+  if (step) {
+    const sku = step.dataset.sku;
+    cart.set(sku, Math.max(0, (cart.get(sku) ?? 0) + Number(step.dataset.d)));
+    document.querySelector(`[data-qty="${sku}"]`).textContent = cart.get(sku);
+    return renderCart();
+  }
+  const resend = e.target.closest("[data-resend]");
+  if (resend) {
+    resend.disabled = true;
+    const all = resend.textContent === "Send again" ? "?all=1" : "";
+    await fetch(`/api/orders/${resend.dataset.resend}/resend${all}`, { method: "POST" });
+    loadOrders();
+  }
+});
+
+$("checkout").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const f = new FormData(e.target);
+  const customer = Object.fromEntries(["name", "company", "address", "zip", "phone", "email"].map((k) => [k, f.get(k)]));
+  const items = [...cart].filter(([, q]) => q > 0).map(([sku, qty]) => ({ sku, qty }));
+  $("place").disabled = true;
+  $("place").textContent = "Placing order…";
+  await fetch("/api/checkout", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ items, customer, code: f.get("code") }) });
+  cart.clear();
+  renderProducts(); renderCart(); loadOrders();
+  $("place").textContent = "Place order";
+});
+
+(async () => {
+  products = await (await fetch("/api/products")).json();
+  renderProducts(); renderCart(); loadOrders();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 1372 >>
+stream
+BT
+/F1 20 Tf 1 0 0 1 50 790 Tm (Harbor & Pine Supply) Tj
+/F1 10 Tf 1 0 0 1 50 772 Tm (22 Orchard St, Burlington, VT 05401) Tj
+/F1 10 Tf 1 0 0 1 50 760 Tm (billing@harborandpine.example) Tj
+/F1 20 Tf 1 0 0 1 380 790 Tm (INVOICE) Tj
+/F1 10 Tf 1 0 0 1 380 772 Tm (Invoice no: INV-30987) Tj
+/F1 10 Tf 1 0 0 1 380 758 Tm (Invoice date: 2026-10-19) Tj
+/F1 10 Tf 1 0 0 1 380 744 Tm (Status: PAID \(ACH\)) Tj
+/F1 10 Tf 1 0 0 1 380 730 Tm (Sales rep: Jordan Lee) Tj
+/F1 11 Tf 1 0 0 1 50 712 Tm (Bill to:) Tj
+/F1 11 Tf 1 0 0 1 50 696 Tm (Northfield Dental) Tj
+/F1 11 Tf 1 0 0 1 50 682 Tm (210 Main St, Northfield, MN 55057) Tj
+/F1 11 Tf 1 0 0 1 50 668 Tm (Phone: 507-555-0193) Tj
+/F1 11 Tf 1 0 0 1 50 654 Tm (Email: billing@northfielddental.example) Tj
+/F1 11 Tf 1 0 0 1 50 610 Tm (SKU            Description          Qty   Unit price     Amount) Tj
+/F1 11 Tf 1 0 0 1 50 590 Tm (HB-SPF-30      Sunscreen SPF 30      10       $11.25    $112.50) Tj
+/F1 11 Tf 1 0 0 1 50 572 Tm (HG-PLANTER-L   Planter, large         3       $26.75     $80.25) Tj
+/F1 11 Tf 1 0 0 1 300 530 Tm (Subtotal                  $192.75) Tj
+/F1 11 Tf 1 0 0 1 300 514 Tm (Sales tax \(6.875%\)         $13.25) Tj
+/F1 11 Tf 1 0 0 1 300 494 Tm (TOTAL DUE                 $206.00) Tj
+/F1 11 Tf 1 0 0 1 300 478 Tm (Amount paid               $206.00) Tj
+/F1 9 Tf 1 0 0 1 50 430 Tm (Thank you for your business.) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000001664 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1732
+%%EOF

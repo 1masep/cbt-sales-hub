@@ -1,0 +1,3 @@
+{
+  "crons": [{ "path": "/api/cron/woocommerce-sync", "schedule": "*/5 * * * *" }]
+}

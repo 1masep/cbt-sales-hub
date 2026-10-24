@@ -1,0 +1,30 @@
+From: Harbor & Pine Supply <orders@harborandpine.example>
+To: ap@copperlinebuilders.example
+Subject: Your order #HP-4521 is confirmed
+
+Hi Copperline Builders,
+
+Thanks for your order! We've received your payment and your items are on the way.
+
+Order #HP-4521
+Placed: October 21, 2026
+Payment: Visa ending 4417 — PAID
+
+Item                         SKU            Qty   Price     Total
+USB-C hub                    EL-USBC-HUB    2     $49.99    $99.98
+Hoodie, medium               AP-HOOD-M      4     $38.50    $154.00
+
+Subtotal                                                    $253.98
+Discount (SAVE10, 10% off)                                  -$25.40
+Sales tax (6.25%)                                           $14.29
+Order total                                                 $242.87
+
+Shipping to:
+Copperline Builders
+1500 Industrial Way
+Denver, CO 80216
+Phone: (303) 555-0142
+Email: ap@copperlinebuilders.example
+
+Questions? Just reply to this email.
+— The Harbor & Pine team

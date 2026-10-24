@@ -1,0 +1,192 @@
+.chartBox {
+  position: relative;
+  width: 100%;
+}
+.chartBox svg {
+  display: block;
+  overflow: visible;
+}
+.axis {
+  font-size: 12px;
+  fill: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  list-style: none;
+  font-size: 0.875rem;
+  color: var(--ink-2);
+}
+.legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.swatchLine {
+  width: 18px;
+  height: 3px;
+  border-radius: 2px;
+}
+.swatchDash {
+  width: 18px;
+  height: 0;
+  border-top: 2px dashed currentColor;
+}
+.swatchBand {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  opacity: 0.25;
+}
+.swatchBar {
+  width: 14px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 4;
+  display: grid;
+  gap: 2px;
+  min-width: 200px;
+  max-width: 260px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 0 0 1px var(--line-strong), var(--shadow-1);
+  font-size: 0.875rem;
+  color: var(--ink-2);
+  pointer-events: none;
+  font-variant-numeric: tabular-nums;
+}
+.tooltip strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Horizontal bars (Top 20, stock) */
+.hbars {
+  position: relative;
+  display: grid;
+  gap: 2px;
+}
+.hbarRow {
+  display: grid;
+  grid-template-columns: minmax(120px, 210px) 1fr 64px;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 3px var(--space-2);
+  border-radius: 6px;
+  cursor: default;
+}
+.hbarRow:hover,
+.hbarRow:focus-visible {
+  background: var(--brand-subtle);
+}
+.hbarLabel {
+  display: flex;
+  gap: var(--space-2);
+  min-width: 0;
+  font-size: 0.875rem;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rank {
+  flex: none;
+  width: 2ch;
+  text-align: right;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.hbarTrack {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 14px;
+}
+.hbar {
+  display: block;
+  height: 10px;
+  min-width: 2px;
+  border-radius: 0 4px 4px 0;
+  transition: width 220ms var(--ease);
+}
+.hbarValue {
+  font-size: 0.875rem;
+  color: var(--ink-2);
+  text-align: right;
+}
+
+.stockRows {
+  display: grid;
+  gap: var(--space-1);
+}
+.stockRow {
+  display: grid;
+  grid-template-columns: minmax(150px, 260px) 1fr;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2);
+  border-radius: 6px;
+}
+.stockRow + .stockRow {
+  border-top: 1px solid var(--line);
+}
+.stockRow:hover,
+.stockRow:focus-visible {
+  background: var(--brand-subtle);
+}
+.stockLabel {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  font-size: 0.875rem;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.stockBars {
+  display: grid;
+  gap: 2px;
+}
+.barValue {
+  font-size: 0.8125rem;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.statusOrderNow,
+.statusRunningLow,
+.statusHealthy {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.statusOrderNow {
+  color: var(--danger);
+}
+.statusRunningLow {
+  color: var(--warning);
+}
+.statusHealthy {
+  color: var(--success);
+}
+
+@media (max-width: 640px) {
+  .hbarRow {
+    grid-template-columns: minmax(100px, 140px) 1fr 52px;
+  }
+  .stockRow {
+    grid-template-columns: 1fr;
+  }
+}

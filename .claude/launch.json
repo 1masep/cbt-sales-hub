@@ -1,0 +1,36 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "sales-dashboard",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "node_modules/next/dist/bin/next",
+        "dev",
+        "-p",
+        "3456"
+      ],
+      "port": 3456
+    },
+    {
+      "name": "demo-shop",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "--env-file-if-exists=.env.local",
+        "demo-shop/server.mjs"
+      ],
+      "port": 3457
+    },
+    {
+      "name": "sales-prod",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "node_modules/next/dist/bin/next",
+        "start",
+        "-p",
+        "3456"
+      ],
+      "port": 3456
+    }
+  ]
+}

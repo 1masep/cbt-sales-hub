@@ -1,0 +1,237 @@
+/*
+ * CBT Hospitality Supplies — back-office palette.
+ * Restrained: blue-tinted neutrals, CBT blue (#1346AF) for actions and
+ * selection only, the logo's forest green for success, the website's coral
+ * for problems. Light theme: used at a desk in office light.
+ */
+:root {
+  color-scheme: light;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+
+  --bg: oklch(0.982 0.004 264);
+  --surface: oklch(0.997 0.002 264);
+  --surface-2: oklch(0.962 0.007 264);
+  --surface-3: oklch(0.93 0.011 264);
+
+  --ink: oklch(0.25 0.03 264);
+  --ink-2: oklch(0.41 0.025 264);
+  --ink-3: oklch(0.5 0.02 264);
+
+  --brand: oklch(0.45 0.17 263);
+  --brand-hover: oklch(0.39 0.16 263);
+  --brand-subtle: oklch(0.95 0.025 263);
+  --brand-ink: oklch(0.36 0.14 263);
+  --navy: oklch(0.32 0.075 248);
+
+  --success: oklch(0.47 0.09 150);
+  --success-subtle: oklch(0.95 0.03 150);
+  --warning: oklch(0.47 0.1 65);
+  --warning-subtle: oklch(0.96 0.045 85);
+  --danger: oklch(0.52 0.17 35);
+  --danger-subtle: oklch(0.96 0.03 35);
+
+  --line: oklch(0.25 0.03 264 / 0.1);
+  --line-strong: oklch(0.25 0.03 264 / 0.18);
+  --focus: 0 0 0 3px oklch(0.45 0.17 263 / 0.35);
+
+  --shadow-1: 0 1px 2px oklch(0.25 0.03 264 / 0.05), 0 2px 8px oklch(0.25 0.03 264 / 0.04);
+  --shadow-2: 0 2px 6px oklch(0.25 0.03 264 / 0.08), 0 18px 48px oklch(0.25 0.03 264 / 0.16);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-8: 3rem;
+
+  --radius: 8px;
+  --radius-lg: 12px;
+  --ease: cubic-bezier(0.25, 1, 0.5, 1); /* ease-out-quart */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+.mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.9em;
+  letter-spacing: -0.01em;
+}
+
+/* Buttons: one shape everywhere; weight says importance. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  border: 0;
+  border-radius: var(--radius);
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color 150ms var(--ease), box-shadow 150ms var(--ease), color 150ms var(--ease);
+}
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.btn-primary {
+  background: var(--brand);
+  color: oklch(0.99 0.005 263);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--brand-hover);
+}
+.btn-secondary {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+}
+.btn-secondary:hover:not(:disabled) {
+  background: var(--surface-2);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-2);
+  padding-inline: 0.75rem;
+}
+.btn-ghost:hover:not(:disabled) {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+.btn-danger {
+  background: var(--danger);
+  color: oklch(0.99 0.005 35);
+}
+.btn-danger:hover:not(:disabled) {
+  background: oklch(0.47 0.16 35);
+}
+.btn-danger-quiet {
+  background: transparent;
+  color: var(--danger);
+  padding-inline: 0.75rem;
+}
+.btn-danger-quiet:hover:not(:disabled) {
+  background: var(--danger-subtle);
+}
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: background-color 150ms var(--ease);
+}
+.icon-btn:hover:not(:disabled) {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+.icon-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* Fields */
+.field {
+  display: grid;
+  gap: 0.35rem;
+}
+.field > span {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.input {
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9375rem;
+  transition: border-color 150ms var(--ease), box-shadow 150ms var(--ease);
+}
+.input:hover {
+  border-color: oklch(0.25 0.03 264 / 0.3);
+}
+.input:focus,
+.input:focus-visible {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: var(--focus);
+}
+.input[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+.field-error {
+  font-size: 0.875rem;
+  color: var(--danger);
+}
+
+/* Magic UI Text Highlighter: keep the drawing inside the cell and behind the text */
+.cbt-highlight {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+}
+.cbt-highlight > svg {
+  z-index: -1;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
